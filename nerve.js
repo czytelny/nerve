@@ -1,7 +1,7 @@
 "use strict";
 
 var nerve = (function () {
-
+    var DEFAULT_ROUTE = "root";
     // issue #1: routes should be object instead of array as per usage below.
     var routes = {};
 
@@ -64,7 +64,7 @@ var nerve = (function () {
             }
 
             if (!r) {
-                r = 'root';
+                r = DEFAULT_ROUTE;
             }
 
             if (r && !routes[channel][r]) {
@@ -85,7 +85,7 @@ var nerve = (function () {
 
         off: function (channel, route, scope) {
             if (routes[channel]) {
-                var r = 'root', caller = scope || arguments.callee;
+                var r = DEFAULT_ROUTE, caller = scope || arguments.callee;
 
                 if (route) r = route;
 
@@ -104,7 +104,8 @@ var nerve = (function () {
             /// <param name="channel" type="Object"></param>
             /// <param name="route" type="Object"></param>
             /// <param name="context" type="Object"></param>
-            var r = 'root', obj = null;
+            var r = DEFAULT_ROUTE, obj = null;
+
             var argLength = arguments.length;
             if (argLength === 1 || argLength === 0) {
                 throw Error('A channel and a callback must be specified');
