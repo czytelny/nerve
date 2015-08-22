@@ -1,4 +1,6 @@
-(function () {
+"use strict";
+
+var nerve = (function () {
 
     // issue #1: routes should be object instead of array as per usage below.
     var routes = {};
@@ -17,7 +19,7 @@
     }
 
 
-    window.nerve = {
+    return {
 
         on: function (channel, route, callback, scope) {
             /// <summary>Listen to a given channel or listen to a channel and route combination</summary>
