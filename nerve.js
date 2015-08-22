@@ -99,18 +99,22 @@ var nerve = (function () {
             }
         },
 
-        send: function (channel, route, context) {
+        send: function (channel, route, transferObj) {
             /// <summary></summary>
             /// <param name="channel" type="Object"></param>
             /// <param name="route" type="Object"></param>
             /// <param name="context" type="Object"></param>
-            var r = 'root', ctx = null;
+            var r = 'root', obj = null;
+            var argLength = arguments.length;
+            if (argLength === 1 || argLength === 0) {
+                throw Error('A channel and a callback must be specified');
+            }
 
-            if (arguments.length == 2) {
-                ctx = arguments[1];
+            if (arguments.length === 2) {
+                obj = arguments[1];
             } else if (arguments.length == 3) {
                 r = route;
-                ctx = context;
+                obj = transferObj;
             }
 
             if (!routes[channel] || !routes[channel][r]) {
@@ -124,7 +128,7 @@ var nerve = (function () {
                 (function (ch, rt, idx) {
                     var ref = setTimeout(function () {
                         try {
-                            routes[ch][rt][idx].callback(ctx);
+                            routes[ch][rt][idx].callback(obj);
                             clearTimeout(ref);
                         } catch (e) {
                             return;
