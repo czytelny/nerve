@@ -18,6 +18,11 @@ var nerve = (function () {
         return null;
     }
 
+    function isString(object) {
+        return (typeof object === 'string' || object instanceof String);
+    }
+
+
 
     return {
 
@@ -99,44 +104,39 @@ var nerve = (function () {
             }
         },
 
-        send: function (channel, route, transferObj) {
-            /// <summary></summary>
-            /// <param name="channel" type="Object"></param>
-            /// <param name="route" type="Object"></param>
-            /// <param name="context" type="Object"></param>
-            var r = DEFAULT_ROUTE, obj = null;
+        send: function (channel, route, tObject) {
+            var r = DEFAULT_ROUTE, transferObject = null;
 
             var argLength = arguments.length;
-            if (argLength === 1 || argLength === 0) {
-                throw Error('A channel and a callback must be specified');
+            if (argLength === 0) {
+                throw Error('A channel must be specified');
             }
 
-            if (arguments.length === 2) {
-                obj = arguments[1];
-            } else if (arguments.length == 3) {
+            if (argLength === 2) {
+                if (isString(arguments[1])) {
+                    r = arguments[1];
+                } else
+                    transferObject = arguments[1];
+            }
+
+            else if (arguments.length == 3) {
                 r = route;
-                obj = transferObj;
+                transferObject = tObject;
             }
 
             if (!routes[channel] || !routes[channel][r]) {
                 return;
             }
 
-            var listeners = routes[channel][r], i = 0, len = listeners.length;
+            var listeners = routes[channel][r], len = listeners.length;
 
-            for (; i < len; i++) {
-
-                (function (ch, rt, idx) {
-                    var ref = setTimeout(function () {
-                        try {
-                            routes[ch][rt][idx].callback(obj);
-                            clearTimeout(ref);
-                        } catch (e) {
-                            return;
-                        }
-                    });
-                })(channel, r, i);
+            for (var i = 0; i < len; i++) {
+                routes[channel][r][i].callback(transferObject);
             }
+        },
+
+        getRoutes: function() {
+            return routes;
         }
     };
 }
