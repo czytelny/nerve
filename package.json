@@ -1,0 +1,32 @@
+{
+  "name": "nerve",
+  "version": "0.0.2",
+  "homepage" : "https://github.com/czytelny/nerve",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/czytelny/nerve.git"
+  },
+  "description": "An asynchronous javascript micro framework for event broadcasts along routes and channels.",
+  "keywords": [
+    "events",
+    "eventbus",
+    "broadcasting",
+    "event",
+    "broadcast",
+    "lightweight"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "karma": "latest",
+    "karma-jasmine": "latest",
+    "karma-phantomjs-launcher": "latest"
+  }
+}
